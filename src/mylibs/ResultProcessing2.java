@@ -24,7 +24,7 @@ public class ResultProcessing2 {
 	public Connection connect() {
 		Connection conn = null;
 		try {
-			Class.forName(DRIVER); // Load MySQL driver
+			Class.forName(DRIVER); 
 			conn = DriverManager.getConnection(URL, USER, PASS);
 			System.out.println("Database connected successfully.");
 		} catch (ClassNotFoundException e) {
@@ -64,10 +64,10 @@ public class ResultProcessing2 {
 			if (conn != null) {
 				pStat.setString(1, taskTitle);
 				pStat.setString(2, description);
-				pStat.setObject(3, deadline); // Using LocalDate
+				pStat.setObject(3, deadline); 
 				pStat.setString(4, priority);
 				pStat.setString(5, category);
-				pStat.setObject(6, reminder); // Using LocalDate
+				pStat.setObject(6, reminder); 
 				pStat.executeUpdate();
 				System.out.println("Task inserted successfully.");
 			}
@@ -76,8 +76,6 @@ public class ResultProcessing2 {
 			e.printStackTrace();
 		}
 	}
-
-	// Fetch all tasks from the database
 	public List<Tasks> getAllTasks() {
 		List<Tasks> tasks = new ArrayList<>();
 		String query = "SELECT * FROM tasks";
@@ -85,14 +83,14 @@ public class ResultProcessing2 {
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(query)) {
 			while (rs.next()) {
-				Tasks task = new Tasks(); // Use the default constructor
+				Tasks task = new Tasks(); 
 				task.setId(rs.getInt("id"));
 				task.setTitle(rs.getString("task_title"));
 				task.setDescription(rs.getString("task_description"));
 				task.setDeadline(rs.getTimestamp("deadline").toLocalDateTime());
 				task.setPriority(rs.getString("task_priority"));
 				task.setCategory(rs.getString("task_category"));
-				task.setReminderDate(rs.getTimestamp("reminder_date").toLocalDateTime()); // ✅ CORRECT
+				task.setReminderDate(rs.getTimestamp("reminder_date").toLocalDateTime()); 
 				tasks.add(task);
 			}
 		} catch (SQLException e) {
@@ -102,7 +100,6 @@ public class ResultProcessing2 {
 		return tasks;
 	}
 
-	// Test database connection
 	public static void main(String[] args) {
 		ResultProcessing2 rp = new ResultProcessing2();
 		Connection conn = rp.connect();
