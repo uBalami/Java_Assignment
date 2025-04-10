@@ -8,10 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -21,11 +18,13 @@ public class SignUp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		//setting up main window or primary stage 
 		primaryStage.setHeight(320);
-		primaryStage.setWidth(234); 
+		primaryStage.setWidth(234);
 		primaryStage.setResizable(false);
 		primaryStage.setAlwaysOnTop(true);
 
+		// All UI components
 		Label lblTitle, lblFullName, lblPhoneno, lblEmail, lblUsername, lblPassword;
 		TextField txtFullName, txtPhoneno, txtEmail, txtUsername;
 		PasswordField txtPassword;
@@ -34,26 +33,32 @@ public class SignUp extends Application {
 		// Label
 		lblTitle = new Label("Task Manager");
 		lblTitle.relocate(58, 5);
+		lblTitle.setStyle("-fx-text-fill: #00A3E0;");
 		lblTitle.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
 		lblFullName = new Label("Full Name:");
 		lblFullName.relocate(10, 35);
+		lblFullName.setStyle("-fx-text-fill: #CFCFCF;");
 		lblFullName.setFont(Font.font("Arial", FontWeight.BOLD, 11));
 
 		lblPhoneno = new Label("Phone Number:");
 		lblPhoneno.relocate(10, 75);
+		lblPhoneno.setStyle("-fx-text-fill: #CFCFCF;");
 		lblPhoneno.setFont(Font.font("Arial", FontWeight.BOLD, 11));
 
 		lblEmail = new Label("Email:");
 		lblEmail.relocate(10, 115);
+		lblEmail.setStyle("-fx-text-fill: #CFCFCF;");
 		lblEmail.setFont(Font.font("Arial", FontWeight.BOLD, 11));
 
 		lblUsername = new Label("Username:");
 		lblUsername.relocate(10, 155);
+		lblUsername.setStyle("-fx-text-fill: #CFCFCF;");
 		lblUsername.setFont(Font.font("Arial", FontWeight.BOLD, 11));
 
 		lblPassword = new Label("Password:");
 		lblPassword.relocate(10, 195);
+		lblPassword.setStyle("-fx-text-fill: #CFCFCF;");
 		lblPassword.setFont(Font.font("Arial", FontWeight.BOLD, 11));
 
 		// TextFields
@@ -82,6 +87,7 @@ public class SignUp extends Application {
 		btnSignUp = new Button("Sign Up");
 		btnSignUp.relocate(65, 250);
 		btnSignUp.setPrefWidth(100);
+		btnSignUp.setStyle("-fx-background-color: #007BFF; -fx-text-fill: white; -fx-underline: true");
 
 		// Button EventHandler
 		btnSignUp.setOnAction(new EventHandler<ActionEvent>() {
@@ -117,7 +123,7 @@ public class SignUp extends Application {
 		Pane pane = new Pane();
 		Scene scene = new Scene(pane);
 		primaryStage.setScene(scene);
-		pane.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
+		pane.setStyle("-fx-background-color: #2E2E2E;");
 
 		// Adding Elements to Pane
 		pane.getChildren().addAll(lblTitle, lblFullName, lblPhoneno, lblEmail, lblUsername, lblPassword, txtFullName,
