@@ -1,8 +1,9 @@
-package mylibs;
+    package mylibs;
 
 import java.time.LocalDateTime;
 
 public class Tasks {
+	//fields to store all the task details
 	private int id;
 	private String tasktitle;
 	private String description;
@@ -14,6 +15,7 @@ public class Tasks {
 	public Tasks() {
 	}
 
+	//constructor 
 	public Tasks(int id, String tasktitle, String description, LocalDateTime deadline, String priority, String category,
 			LocalDateTime reminderDate) {
 		this.id = id;
@@ -24,7 +26,8 @@ public class Tasks {
 		this.category = category;
 		this.reminderDate = reminderDate;
 	}
-
+ 
+	//GETTER AND SETTER FOR ALL
 	public int getId() {
 		return id;
 	}
@@ -82,6 +85,7 @@ public class Tasks {
 		this.reminderDate = reminderDate;
 	}
 
+	//toString
 	@Override
 	public String toString() {
 		return "Tasks [id=" + id + ", title=" + tasktitle + ", description=" + description + ", deadline=" + deadline
