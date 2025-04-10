@@ -2,12 +2,14 @@ package mylibs;
 
 public class User {
 
+	//All the fields to store User Information 
 	private String full_name;
 	private int phone_no;
 	private String email;
 	private String username;
 	private String password;
-
+	
+	//constructor 
 	public User(String full_name, int phone_no, String email, String username, String password) {
 		super();
 		this.full_name = full_name;
@@ -16,7 +18,8 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
-
+ 
+	//GETTER AND SETTER FOR ALL
 	public String getFull_name() {
 		return full_name;
 	}
@@ -57,6 +60,7 @@ public class User {
 		this.password = password;
 	}
 
+	//toString
 	@Override
 	public String toString() {
 		return "User [full_name=" + full_name + ", phone_no=" + phone_no + ", email=" + email + ", username=" + username
