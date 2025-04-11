@@ -104,11 +104,15 @@ public class SignUp extends Application {
 					System.out.println("Please fill all fields so u can proceed ahead");
 					return;
 				}
-
+				//stop if user already exist 
+			    ResultProcessing2 dbHandler = new ResultProcessing2();
+			    if (dbHandler.userDoExists(username)) {
+			        System.out.println("User already exists. Try a different username or email.");
+			        return;
+			    }
 				// Insert user data into the database
-				ResultProcessing2 dbHandler = new ResultProcessing2();
 				dbHandler.insertUser(fullName, phoneNo, email, username, password);
-				System.out.println("User registered successfully!");
+				System.out.println("Congraatulation registered successfully!");
 				try {
 					new UserLoginWindow().start(new Stage());
 					primaryStage.close();
@@ -123,7 +127,7 @@ public class SignUp extends Application {
 		Pane pane = new Pane();
 		Scene scene = new Scene(pane);
 		primaryStage.setScene(scene);
-		pane.setStyle("-fx-background-color: #2E2E2E;");
+		pane.setStyle("-fx-background-image: url('file:/C:/Users/Unish%20Balami/Downloads/background.jpeg'); -fx-background-size: cover;");
 
 		// Adding Elements to Pane
 		pane.getChildren().addAll(lblTitle, lblFullName, lblPhoneno, lblEmail, lblUsername, lblPassword, txtFullName,

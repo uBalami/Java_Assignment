@@ -1,4 +1,4 @@
-package TaskManager;
+package TaskManager; 
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -35,7 +35,7 @@ public class UserLoginWindow extends Application {
 		Pane pane = new Pane();
 		Scene scene = new Scene(pane);
 		primaryStage.setScene(scene);
-		pane.setStyle("-fx-background-color: #2E2E2E;");
+		pane.setStyle("-fx-background-image: url('file:/C:/Users/Unish%20Balami/Downloads/background.jpeg'); -fx-background-size: cover;");
 		
 		//label
 		lblTitle = new Label("Task Manager");

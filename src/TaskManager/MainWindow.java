@@ -1,11 +1,12 @@
-
 package TaskManager;
 
 import java.time.LocalDate;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -16,6 +17,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -28,8 +31,8 @@ public class MainWindow extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		
-		//setting up the main window or primary stage
+
+		// setting up the main window or primary stage
 		primaryStage.setHeight(620);
 		primaryStage.setWidth(1200);
 		primaryStage.setResizable(false);
@@ -104,26 +107,21 @@ public class MainWindow extends Application {
 
 		// TableView setup
 		taskTable.relocate(400, 40);
-		taskTable.setPrefWidth(800);
+		taskTable.setPrefWidth(750);
 		taskTable.setPrefHeight(475);
 
 		// Columns for TableView
 
 		TableColumn<Tasks, String> titleCol = new TableColumn<>("Title");
 		titleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
-
 		TableColumn<Tasks, String> descCol = new TableColumn<>("Description");
 		descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-
 		TableColumn<Tasks, String> deadlineCol = new TableColumn<>("Deadline");
 		deadlineCol.setCellValueFactory(new PropertyValueFactory<>("deadline"));
-
 		TableColumn<Tasks, String> priorityCol = new TableColumn<>("Priority");
 		priorityCol.setCellValueFactory(new PropertyValueFactory<>("priority"));
-
 		TableColumn<Tasks, String> categoryCol = new TableColumn<>("Category");
 		categoryCol.setCellValueFactory(new PropertyValueFactory<>("category"));
-
 		TableColumn<Tasks, String> reminderCol = new TableColumn<>("Reminder");
 		reminderCol.setCellValueFactory(new PropertyValueFactory<>("reminderDate"));
 
@@ -145,15 +143,26 @@ public class MainWindow extends Application {
 		btnClear.relocate(25, 480);
 		btnClear.setPrefWidth(120);
 		btnClear.setStyle("-fx-background-color: #E63946; -fx-text-fill: white; -fx-underline: true");
-
+		Image clearIcon = new Image("file:C:/Users/Unish Balami/Downloads/delete.png");
+		ImageView clearimageView = new ImageView(clearIcon);
+		clearimageView.setFitWidth(20);
+		clearimageView.setFitHeight(20);
+		btnClear.setGraphic(clearimageView);
 		// Clear Button EventHandler
-		btnClear.setOnMouseClicked(event -> {
-			Tasks selectedTask = taskTable.getSelectionModel().getSelectedItem();
-
-			ResultProcessing2 dbHandler = new ResultProcessing2();
-			dbHandler.deleteTask(selectedTask.getId());
-
-			taskTable.getItems().remove(selectedTask);
+		btnClear.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		        Tasks selectedTask = taskTable.getSelectionModel().getSelectedItem();
+		        
+		        if (selectedTask == null) {
+		            System.out.println("Please select a task to delete.");
+		            return;
+		        }
+		        ResultProcessing2 dbHandler = new ResultProcessing2();
+		        dbHandler.deleteTask(selectedTask.getId());
+		        taskTable.getItems().remove(selectedTask);
+		        System.out.println("Task deleted successfully!");
+		    }
 		});
 
 		// Edit Button
@@ -161,43 +170,66 @@ public class MainWindow extends Application {
 		btnEdit.relocate(25, 510);
 		btnEdit.setStyle("-fx-background-color: #00C3FF; -fx-text-fill: white;-fx-underline: true");
 		btnEdit.setPrefWidth(120);
-		btnEdit.setOnAction(event -> {
-			Tasks selectedTask = taskTable.getSelectionModel().getSelectedItem();
+		Image editIcon = new Image("file:C:/Users/Unish Balami/Downloads/icons8-update-file-24.png");
+		ImageView editimageView = new ImageView(editIcon);
+		editimageView.setFitWidth(20);
+		editimageView.setFitHeight(20);
+		btnEdit.setGraphic(editimageView);
+		btnEdit.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		        Tasks selectedTask = taskTable.getSelectionModel().getSelectedItem();
 
-			if (selectedTask == null) {
-				System.out.println("Please select a task to edit.");
-				return;
-			}
-			txtTaskTitle.setText(selectedTask.getTitle());
-			txtDescription.setText(selectedTask.getDescription());
-			priorityBox.setValue(selectedTask.getPriority());
-			categoryBox.setValue(selectedTask.getCategory());
-			taskTable.getSelectionModel().clearSelection();
+		        if (selectedTask == null) {
+		            System.out.println("Please select a task to edit.");
+		            return;
+		        }
+		        txtTaskTitle.setText(selectedTask.getTitle());
+		        txtDescription.setText(selectedTask.getDescription());
+		        priorityBox.setValue(selectedTask.getPriority());
+		        categoryBox.setValue(selectedTask.getCategory());
+		        taskTable.getSelectionModel().clearSelection();
+		    }
 		});
+
 
 		Button btnUpdate = new Button("Update");
 		btnUpdate.relocate(25, 540);
 		btnUpdate.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
 		btnUpdate.setPrefWidth(120);
-		btnUpdate.setOnAction(event -> {
-			Tasks selectedTask = taskTable.getSelectionModel().getSelectedItem();
+		Image updateIcon = new Image("file:C:/Users/Unish Balami/Downloads/icons8-edit-26.png");
+		ImageView updateimageView = new ImageView(updateIcon);
+		updateimageView.setFitWidth(20);
+		updateimageView.setFitHeight(20);
+		btnUpdate.setGraphic(updateimageView);
+		btnUpdate.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		        Tasks selectedTask = taskTable.getSelectionModel().getSelectedItem();
 
-			if (selectedTask == null) {
-				System.out.println("Please select a task to Update.");
-				return;
-			}
-			selectedTask.setTitle(txtTaskTitle.getText());
-			selectedTask.setDescription(txtDescription.getText());
-			selectedTask.setPriority(priorityBox.getValue());
-			selectedTask.setCategory(categoryBox.getValue());
-			txtTaskTitle.clear();
-			txtDescription.clear();
-			dateDeadline.setValue(null);
-			priorityBox.setValue("Low");
-			categoryBox.setValue("School");
-			dateReminder.setValue(null);
-			taskTable.refresh();
+		        if (selectedTask == null) {
+		            System.out.println("Please select a task to Update.");
+		            return;
+		        }
+		        selectedTask.setTitle(txtTaskTitle.getText());
+		        selectedTask.setDescription(txtDescription.getText());
+		        selectedTask.setPriority(priorityBox.getValue());
+		        selectedTask.setCategory(categoryBox.getValue());
+		        txtTaskTitle.clear();
+		        txtDescription.clear();
+		        dateDeadline.setValue(null);
+		        priorityBox.setValue("Low");
+		        categoryBox.setValue("School");
+		        dateReminder.setValue(null);
+		        taskTable.refresh();
+		    }
 		});
+
+		Image saveIcon = new Image("file:C:/Users/Unish Balami/Downloads/icons8-save-50.png");
+		ImageView saveimageView = new ImageView(saveIcon);
+		saveimageView.setFitWidth(20);
+		saveimageView.setFitHeight(20);
+		btnSave.setGraphic(saveimageView);
 		// Button EventHandler
 		btnSave.setOnAction((ActionEvent actionEvent) -> {
 			String taskTitle = txtTaskTitle.getText();
@@ -227,7 +259,7 @@ public class MainWindow extends Application {
 		Pane pane = new Pane();
 		Scene scene = new Scene(pane);
 		primaryStage.setScene(scene);
-		pane.setStyle("-fx-background-color: #2E2E2E;");
+		pane.setStyle("-fx-background-image: url('file:/C:/Users/Unish%20Balami/Downloads/background.jpeg'); -fx-background-size: cover;");
 
 		// Adding UI component to Pane
 		pane.getChildren().addAll(btnUpdate, lblTitle, lblTaskTitle, lblDescription, lblDeadline, lblPriority,
